@@ -52,3 +52,9 @@
 (package! php-cs-fixer)
 (package! company-php)
 (package! phpactor)
+
+;; GitHub Copilot
+(package! copilot
+  :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))
+
+(package! beacon)

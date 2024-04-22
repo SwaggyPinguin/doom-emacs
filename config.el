@@ -43,13 +43,32 @@
 (setq org-directory "~/org/")
 
 ;; Set Path to search for Projects
-(setq projectile-project-search-path '(("~/Documents/Projects" . 2) ("~/.config" . 1)))
+;; (setq projectile-project-search-path '(("~/Documents/Projects" . 2) ("~/.config" . 1)))
+(setq projectile-project-search-path '(("~/Documents/Projects" . 2)))
+
+(after! projectile
+  (setq projectile-project-root-files-bottom-up
+        (remove ".git"
+          projectile-project-root-files-bottom-up)))
+
 
 ;; Unique buffer names
 (setq uniquify-buffer-name-style 'forward
       uniquify-min-dir-content 3)
 
 (add-to-list 'auto-mode-alist '("\\.html\\.twig\\'" . web-mode))
+
+;; php-cs-fixer config
+(add-hook 'before-save-hook 'php-cs-fixer-before-save)
+
+;; accept completion from copilot and fallback to company
+(use-package! copilot
+  :hook (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+              ("<tab>" . 'copilot-accept-completion)
+              ("TAB" . 'copilot-accept-completion)
+              ("C-TAB" . 'copilot-accept-completion-by-word)
+              ("C-<tab>" . 'copilot-accept-completion-by-word)))
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
