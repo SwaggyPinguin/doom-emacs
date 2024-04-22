@@ -45,6 +45,10 @@
 ;; Set Path to search for Projects
 (setq projectile-project-search-path '(("~/Documents/Projects" . 2) ("~/.config" . 1)))
 
+;; Unique buffer names
+(setq uniquify-buffer-name-style 'forward
+      uniquify-min-dir-content 3)
+
 (add-to-list 'auto-mode-alist '("\\.html\\.twig\\'" . web-mode))
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
