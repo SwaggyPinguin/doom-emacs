@@ -52,3 +52,5 @@
 (package! php-cs-fixer)
 (package! company-php)
 (package! phpactor)
+
+(package! beacon)
