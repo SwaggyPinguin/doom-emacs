@@ -52,6 +52,10 @@
           projectile-project-root-files-bottom-up)))
 
 
+;; Unique buffer names
+(setq uniquify-buffer-name-style 'forward
+      uniquify-min-dir-content 3)
+
 (add-to-list 'auto-mode-alist '("\\.html\\.twig\\'" . web-mode))
 
 ;; php-cs-fixer config
