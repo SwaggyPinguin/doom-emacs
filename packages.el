@@ -49,7 +49,7 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;; (unpin! t)
 
-(package! php-cs-fixer)
+;; (package! php-cs-fixer)
 (package! company-php)
 (package! phpactor)
 
@@ -58,3 +58,4 @@
   :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))
 
 (package! beacon)
+(package! emmet-mode)
