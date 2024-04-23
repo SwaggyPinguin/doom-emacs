@@ -44,7 +44,7 @@
 
 ;; Set Path to search for Projects
 ;; (setq projectile-project-search-path '(("~/Documents/Projects" . 2) ("~/.config" . 1)))
-(setq projectile-project-search-path '(("~/Documents/Projects" . 2)))
+(setq projectile-project-search-path '("~/Documents/Projects/bmc/bmc-staging" "~/Documents/Projects/wifimedia4u" "~/.config/nvim"))
 
 (after! projectile
   (setq projectile-project-root-files-bottom-up
