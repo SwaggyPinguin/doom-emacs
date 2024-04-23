@@ -59,16 +59,28 @@
 (add-to-list 'auto-mode-alist '("\\.html\\.twig\\'" . web-mode))
 
 ;; php-cs-fixer config
-(add-hook 'before-save-hook 'php-cs-fixer-before-save)
+;; (add-hook 'before-save-hook 'php-cs-fixer-before-save)
 
 ;; accept completion from copilot and fallback to company
 (use-package! copilot
   :hook (prog-mode . copilot-mode)
   :bind (:map copilot-completion-map
-              ("<tab>" . 'copilot-accept-completion)
-              ("TAB" . 'copilot-accept-completion)
+              ("M-j" . 'copilot-accept-completion)
+              ("M-j" . 'copilot-accept-completion)
               ("C-TAB" . 'copilot-accept-completion-by-word)
               ("C-<tab>" . 'copilot-accept-completion-by-word)))
+              ;; ("<tab>" . 'copilot-accept-completion)
+              ;; ("TAB" . 'copilot-accept-completion)
+              ;; ("C-TAB" . 'copilot-accept-completion-by-word)
+              ;; ("C-<tab>" . 'copilot-accept-completion-by-word)))
+
+;; Emmet
+(add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
+(add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
+(add-hook 'php-mode-hook 'emmet-mode)
+
+;; Avy Jump
+(global-set-key (kbd "C-'") 'avy-goto-char-2)
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
