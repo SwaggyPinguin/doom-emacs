@@ -47,6 +47,10 @@
 ;;   '(font-lock-comment-face :slant italic)
 ;;   '(font-lock-keyword-face :slant italic))
 
+;; maximize window on startup
+;; (setq initial-frame-alist '((top . 1) (left . 1) (width . 114) (height . 32)))
+;; (add-to-list 'initial-frame-alist '(maximized))
+
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
@@ -88,72 +92,11 @@
   :config
   (setq php-cs-fixer-config-option (concat (getenv "HOME") "/.config/doom/tools/.php-cs.php")))
 
-;; (use-package dap-mode
-;;   ;; Uncomment the config below if you want all UI panes to be hidden by default!
-;;   ;; :custom
-;;   ;; (lsp-enable-dap-auto-configure nil)
-;;   ;; :config
-;;   ;; (dap-ui-mode 1)
-;;   ;; :custom
-;;   ;; (dap-auto-configure-features '(locals controls tooltip))
-
-;;   :config
-;;   ;; Set up Node debugging
-;;   ;; (require 'dap-node)
-;;   ;; (dap-node-setup) ;; Automatically installs Node debug adapter if needed
-;;   ;; Setup PHP debugging
-;;   ;; (dap-ui-mode 1)
-;;   (require 'dap-php)
-;;   (dap-php-setup)
-
-;;   ;; Bind `C-c l d` to `dap-hydra` for easy access
-;;   (general-define-key
-;;     :keymaps 'lsp-mode-map
-;;     :prefix lsp-keymap-prefix
-;;     "d" '(dap-hydra t :wk "debugger")))
-
-(add-hook 'php-mode-hook 'lsp)
-
-(use-package php-mode
-  :mode "\\.php\\'"
-  :config
-  (require 'dap-php)
-  (dap-php-setup))
-
-(with-eval-after-load 'lsp-mode
-  (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
-  (require 'dap-php)
-  (yas-global-mode))
-
-;; (dap-register-debug-template
-;;   "PHP Listen for Xdebug BMC"
-;;   (list :type "php"
-;;         :request "launch"
-;;         :name "Listen for Xdebug"
-;;         :port 9003
-;;         :pathMappings (list "/var/www/bmc" "${workspaceFolder")
-;;         :log (concat doom-cache-dir "xdebug.log")))
-
-;; (dap-register-debug-template
-;;   "PHP Listen for Xdebug PP"
-;;   (list :type "php"
-;;         :request "launch"
-;;         :name "Listen for Xdebug"
-;;         :port 9003
-;;         :pathMappings (list "/var/www/wifimedia4u" "${workspaceFolder}")
-;;         :log (concat doom-cache-dir "xdebug.log")))
 
 (use-package vterm
   :commands vterm
   :config
   (setq vterm-shell "bash"))
-
-;; disable copilot warning
-(use-package copilot
-  :hook
-  (prog-mode . copilot-mode)
-  (copilot-mode . (lambda ()
-                    (setq-local copilot--indent-warning-printed-p t))))
 
 ;; accept completion from copilot and fallback to company
 (use-package! copilot
