@@ -98,6 +98,13 @@
   :config
   (setq vterm-shell "bash"))
 
+;; disable copilot warning
+(use-package copilot
+  :hook
+  (prog-mode . copilot-mode)
+  (copilot-mode . (lambda ()
+                    (setq-local copilot--indent-warning-printed-p t))))
+
 ;; accept completion from copilot and fallback to company
 (use-package! copilot
   :hook (prog-mode . copilot-mode)
