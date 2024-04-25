@@ -49,9 +49,11 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;; (unpin! t)
 
-;; (package! php-cs-fixer)
+(package! php-cs-fixer)
 (package! company-php)
 (package! phpactor)
+(package! dap-mode)
+(package! php-mode)
 
 ;; GitHub Copilot
 (package! copilot

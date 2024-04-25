@@ -69,10 +69,30 @@
 (setq uniquify-buffer-name-style 'forward
       uniquify-min-dir-content 3)
 
+;; File Modes
 (add-to-list 'auto-mode-alist '("\\.html\\.twig\\'" . web-mode))
+;; (setq web-mode-engines-alist
+;;       '(("twig" . "\\.twig\\'")))
+
+;; Use Twig comment syntax in web-mode for .twig files
+;; (defun my-web-mode-hook ()
+;;   "Hooks for Web mode."
+;;   (setq web-mode-comment-formats
+;;         '(("twig" . " {# %s #}")))
+;;   )
+;; (add-hook 'web-mode-hook  'my-web-mode-hook)
 
 ;; php-cs-fixer config
-;; (add-hook 'before-save-hook 'php-cs-fixer-before-save)
+(add-hook 'before-save-hook 'php-cs-fixer-before-save)
+(use-package! php-cs-fixer
+  :config
+  (setq php-cs-fixer-config-option (concat (getenv "HOME") "/.config/doom/tools/.php-cs.php")))
+
+
+(use-package vterm
+  :commands vterm
+  :config
+  (setq vterm-shell "bash"))
 
 ;; accept completion from copilot and fallback to company
 (use-package! copilot
