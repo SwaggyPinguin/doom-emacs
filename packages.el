@@ -61,3 +61,4 @@
 
 (package! beacon)
 (package! emmet-mode)
+(package! rainbow-mode)
