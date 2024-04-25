@@ -114,6 +114,11 @@
 
 ;; Avy Jump
 (global-set-key (kbd "C-'") 'avy-goto-char-2)
+;; window movement
+(global-set-key (kbd "C-j") 'evil-window-down)
+(global-set-key (kbd "C-k") 'evil-window-up)
+(global-set-key (kbd "C-h") 'evil-window-left)
+(global-set-key (kbd "C-l") 'evil-window-right)
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
