@@ -107,7 +107,7 @@ This section contains every custom Emacs configuration for the editor or plugins
 
 (after! org (org-eldoc-load))
 
-;; (with-eval-after-load 'org (global-org-modern-mode))
+(with-eval-after-load 'org (global-org-modern-mode))
 
 (setq
   ;; Edit settings
