@@ -4,10 +4,10 @@
 (package! toc-org)
 
 ;; Icons
-(package! all-the-icons)
+;; (package! all-the-icons)
 (package! all-the-icons-completion)
 (package! all-the-icons-dired)
-(package! all-the-icons-nerd-fonts)
+;; (package! all-the-icons-nerd-fonts)
 
 ;; Visual
 (package! solaire-mode)
@@ -23,6 +23,9 @@
 (package! php-cs-fixer)
 (package! company-php)
 (package! phpactor)
+
+;; Nix
+(package! nix-mode)
 
 ;; Debug
 (package! dap-mode)

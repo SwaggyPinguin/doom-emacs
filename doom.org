@@ -68,17 +68,18 @@ This section contains every custom Emacs configuration for the editor or plugins
 (setq display-line-numbers-type t) ; nil to disable or relative
 
 ;; Icons in completion buffers
-(add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup)
-(all-the-icons-completion-mode)
+;; (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup)
+;; (all-the-icons-completion-mode)
 
 ;; This makes non-main buffers dimmer, so you can focus on main buffers
 (solaire-global-mode +1)
 
 ;; Beacon shows where the cursor is, even when fast scrolling
-(setq beacon-mode t)
+;; (setq beacon-mode t)
+(beacon-mode 1)
 
 ;; Requires for faster loading
-(require 'dired)
+;; (require 'dired)
 #+end_src
 
 ** Org Mode Configuration
@@ -101,13 +102,13 @@ This section contains every custom Emacs configuration for the editor or plugins
 
 (after! org (org-eldoc-load))
 
-(with-eval-after-load 'org (global-org-modern-mode))
+;; (with-eval-after-load 'org (global-org-modern-mode))
 
 (setq
   ;; Edit settings
   org-auto-align-tags nil
   org-tags-column 0
-  org-catch-invisible-edits 'show-and-error
+  org-fold-catch-invisible-edits 'show-and-error
   org-special-ctrl-a/e t
   org-insert-heading-respect-content t
 
@@ -115,6 +116,8 @@ This section contains every custom Emacs configuration for the editor or plugins
   org-hide-emphasis-markers t
   org-pretty-entities t
   org-ellipsis "…")
+
+(setq-default line-spacing 0)
 
 ;; Automatic table of contents is nice
 (if (require 'toc-org nil t)
@@ -131,11 +134,11 @@ This section contains every custom Emacs configuration for the editor or plugins
 (add-hook 'after-save-hook 'tangle-on-save-org-mode-file)
 
 ;; Better for org source blocks
-(setq electric-indent-mode nil)
-(setq org-src-window-setup 'current-window)
-(set-popup-rule! "^\\*Org Src"
-  :side 'top'
-  :size 0.9)
+;; (setq electric-indent-mode nil)
+;; (setq org-src-window-setup 'current-window)
+;; (set-popup-rule! "^\\*Org Src"
+;;   :side 'top'
+;;   :size 0.9)
 #+end_src
 
 *** Org-auto-tangle
@@ -143,21 +146,21 @@ This section contains every custom Emacs configuration for the editor or plugins
 =org-auto-tangle= allows you to add the option =#+auto_tangle: t= in your Org file so that it automatically tangles when you save the document. I have made adding this to your file even easier by creating a function ‘nd/insert-auto-tangle-tag’ and setting it to a keybinding ‘SPC i a’.
 
 #+begin_src emacs-lisp :tangle config.el
-(use-package! org-auto-tangle
-  :defer t
-  :hook (org-mode . org-auto-tangle-mode)
-  :config
-  (setq org-auto-tangle-default t))
+;; (use-package! org-auto-tangle
+;;   :defer t
+;;   :hook (org-mode . org-auto-tangle-mode)
+;;   :config
+;;   (setq org-auto-tangle-default t))
 
-(defun nd/insert-auto-tangle-tag ()
-  "Insert auto-tangle tag in a literate config."
-  (interactive)
-  (evil-org-open-below 1)
-  (insert "#+auto_tangle: t ")
-  (evil-force-normal-state))
+;; (defun nd/insert-auto-tangle-tag ()
+;;   "Insert auto-tangle tag in a literate config."
+;;   (interactive)
+;;   (evil-org-open-below 1)
+;;   (insert "#+auto_tangle: t ")
+;;   (evil-force-normal-state))
 
-(map! :leader
-      :desc "Insert auto_tangle tag" "i a" #'nd/insert-auto-tangle-tag)
+;; (map! :leader
+;;       :desc "Insert auto_tangle tag" "i a" #'nd/insert-auto-tangle-tag)
 #+end_src
 
 ** Projectile Configuration
@@ -208,48 +211,48 @@ This section contains every custom Emacs configuration for the editor or plugins
 
 #+begin_src emacs-lisp :tangle config.el
 ;; Garbage collection to speed things up
-(add-hook 'after-init-hook
-          #'(lambda ()
-              (setq gc-cons-threshold (* 100 1024 1024))))
-(add-hook 'after-focus-change-function 'garbage-collect)
-(run-with-idle-timer 5 t 'garbage-collect)
+;; (add-hook 'after-init-hook
+;;           #'(lambda ()
+;;               (setq gc-cons-threshold (* 100 1024 1024))))
+;; (add-hook 'after-focus-change-function 'garbage-collect)
+;; (run-with-idle-timer 5 t 'garbage-collect)
 #+end_src
 
 ** Dired Configuration
 
 #+begin_src emacs-lisp :tangle config.el
-(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+;; (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
 
-(map! :desc "Increase font size"
-      "C-=" 'text-scale-increase
+;; (map! :desc "Increase font size"
+;;       "C-=" 'text-scale-increase
 
-      :desc "Decrease font size"
-      "C--" 'text-scale-decrease
+;;       :desc "Decrease font size"
+;;       "C--" 'text-scale-decrease
 
-      :desc "Jump to dired"
-      "M-f" 'dired-jump
-)
+;;       :desc "Jump to dired"
+;;       "M-f" 'dired-jump
+;; )
 #+end_src
 
 ** Focus Mode Configuration
 
 #+begin_src emacs-lisp :tangle config.el
-(require 'focus)
+;; (require 'focus)
 
-(map! :leader
-      :prefix ("F" . "Focus mode")
-      :desc "Toggle focus mode"
-      "t" 'focus-mode
+;; (map! :leader
+;;       :prefix ("F" . "Focus mode")
+;;       :desc "Toggle focus mode"
+;;       "t" 'focus-mode
 
-      :desc "Pin focused section"
-      "p" 'focus-pin
+;;       :desc "Pin focused section"
+;;       "p" 'focus-pin
 
-      :desc "Unpin focused section"
-      "u" 'focus-unpin)
+;;       :desc "Unpin focused section"
+;;       "u" 'focus-unpin)
 
-(add-to-list 'focus-mode-to-thing '(org-mode . org-element))
-(add-to-list 'focus-mode-to-thing '(php-mode . paragraph))
-(add-to-list 'focus-mode-to-thing '(lisp-mode . paragraph))
+;; (add-to-list 'focus-mode-to-thing '(org-mode . org-element))
+;; (add-to-list 'focus-mode-to-thing '(php-mode . paragraph))
+;; (add-to-list 'focus-mode-to-thing '(lisp-mode . paragraph))
 #+end_src
 
 ** LSP Configuration
@@ -347,17 +350,17 @@ This section contains every custom Emacs configuration for the editor or plugins
 
 * package.el
 
-#+begin_src emacs-lisp :tangle package.el
+#+begin_src emacs-lisp :tangle packages.el
 ;; Org
 (package! org-auto-tangle)
 (package! org-modern)
 (package! toc-org)
 
 ;; Icons
-(package! all-the-icons)
+;; (package! all-the-icons)
 (package! all-the-icons-completion)
 (package! all-the-icons-dired)
-(package! all-the-icons-nerd-fonts)
+;; (package! all-the-icons-nerd-fonts)
 
 ;; Visual
 (package! solaire-mode)
@@ -373,6 +376,9 @@ This section contains every custom Emacs configuration for the editor or plugins
 (package! php-cs-fixer)
 (package! company-php)
 (package! phpactor)
+
+;; Nix
+(package! nix-mode)
 
 ;; Debug
 (package! dap-mode)

@@ -20,17 +20,18 @@
 (setq display-line-numbers-type t) ; nil to disable or relative
 
 ;; Icons in completion buffers
-(add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup)
-(all-the-icons-completion-mode)
+;; (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup)
+;; (all-the-icons-completion-mode)
 
 ;; This makes non-main buffers dimmer, so you can focus on main buffers
 (solaire-global-mode +1)
 
 ;; Beacon shows where the cursor is, even when fast scrolling
-(setq beacon-mode t)
+;; (setq beacon-mode t)
+(beacon-mode 1)
 
 ;; Requires for faster loading
-(require 'dired)
+;; (require 'dired)
 
 ;; Set default org directory
 (setq org-directory "~/org/")
@@ -48,13 +49,13 @@
 
 (after! org (org-eldoc-load))
 
-(with-eval-after-load 'org (global-org-modern-mode))
+;; (with-eval-after-load 'org (global-org-modern-mode))
 
 (setq
   ;; Edit settings
   org-auto-align-tags nil
   org-tags-column 0
-  org-catch-invisible-edits 'show-and-error
+  org-fold-catch-invisible-edits 'show-and-error
   org-special-ctrl-a/e t
   org-insert-heading-respect-content t
 
@@ -62,6 +63,8 @@
   org-hide-emphasis-markers t
   org-pretty-entities t
   org-ellipsis "…")
+
+(setq-default line-spacing 0)
 
 ;; Automatic table of contents is nice
 (if (require 'toc-org nil t)
@@ -78,27 +81,27 @@
 (add-hook 'after-save-hook 'tangle-on-save-org-mode-file)
 
 ;; Better for org source blocks
-(setq electric-indent-mode nil)
-(setq org-src-window-setup 'current-window)
-(set-popup-rule! "^\\*Org Src"
-  :side 'top'
-  :size 0.9)
+;; (setq electric-indent-mode nil)
+;; (setq org-src-window-setup 'current-window)
+;; (set-popup-rule! "^\\*Org Src"
+;;   :side 'top'
+;;   :size 0.9)
 
-(use-package! org-auto-tangle
-  :defer t
-  :hook (org-mode . org-auto-tangle-mode)
-  :config
-  (setq org-auto-tangle-default t))
+;; (use-package! org-auto-tangle
+;;   :defer t
+;;   :hook (org-mode . org-auto-tangle-mode)
+;;   :config
+;;   (setq org-auto-tangle-default t))
 
-(defun nd/insert-auto-tangle-tag ()
-  "Insert auto-tangle tag in a literate config."
-  (interactive)
-  (evil-org-open-below 1)
-  (insert "#+auto_tangle: t ")
-  (evil-force-normal-state))
+;; (defun nd/insert-auto-tangle-tag ()
+;;   "Insert auto-tangle tag in a literate config."
+;;   (interactive)
+;;   (evil-org-open-below 1)
+;;   (insert "#+auto_tangle: t ")
+;;   (evil-force-normal-state))
 
-(map! :leader
-      :desc "Insert auto_tangle tag" "i a" #'nd/insert-auto-tangle-tag)
+;; (map! :leader
+;;       :desc "Insert auto_tangle tag" "i a" #'nd/insert-auto-tangle-tag)
 
 ;; Set Path to search for Projects
 (setq projectile-project-search-path '("~/Documents/Projects/bmc/bmc-staging" "~/Documents/Projects/wifimedia4u"))
@@ -133,40 +136,40 @@
       uniquify-min-dir-content 3)
 
 ;; Garbage collection to speed things up
-(add-hook 'after-init-hook
-          #'(lambda ()
-              (setq gc-cons-threshold (* 100 1024 1024))))
-(add-hook 'after-focus-change-function 'garbage-collect)
-(run-with-idle-timer 5 t 'garbage-collect)
+;; (add-hook 'after-init-hook
+;;           #'(lambda ()
+;;               (setq gc-cons-threshold (* 100 1024 1024))))
+;; (add-hook 'after-focus-change-function 'garbage-collect)
+;; (run-with-idle-timer 5 t 'garbage-collect)
 
-(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+;; (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
 
-(map! :desc "Increase font size"
-      "C-=" 'text-scale-increase
+;; (map! :desc "Increase font size"
+;;       "C-=" 'text-scale-increase
 
-      :desc "Decrease font size"
-      "C--" 'text-scale-decrease
+;;       :desc "Decrease font size"
+;;       "C--" 'text-scale-decrease
 
-      :desc "Jump to dired"
-      "M-f" 'dired-jump
-)
+;;       :desc "Jump to dired"
+;;       "M-f" 'dired-jump
+;; )
 
-(require 'focus)
+;; (require 'focus)
 
-(map! :leader
-      :prefix ("F" . "Focus mode")
-      :desc "Toggle focus mode"
-      "t" 'focus-mode
+;; (map! :leader
+;;       :prefix ("F" . "Focus mode")
+;;       :desc "Toggle focus mode"
+;;       "t" 'focus-mode
 
-      :desc "Pin focused section"
-      "p" 'focus-pin
+;;       :desc "Pin focused section"
+;;       "p" 'focus-pin
 
-      :desc "Unpin focused section"
-      "u" 'focus-unpin)
+;;       :desc "Unpin focused section"
+;;       "u" 'focus-unpin)
 
-(add-to-list 'focus-mode-to-thing '(org-mode . org-element))
-(add-to-list 'focus-mode-to-thing '(php-mode . paragraph))
-(add-to-list 'focus-mode-to-thing '(lisp-mode . paragraph))
+;; (add-to-list 'focus-mode-to-thing '(org-mode . org-element))
+;; (add-to-list 'focus-mode-to-thing '(php-mode . paragraph))
+;; (add-to-list 'focus-mode-to-thing '(lisp-mode . paragraph))
 
 (use-package lsp-mode
   :ensure t)
