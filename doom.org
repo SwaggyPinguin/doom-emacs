@@ -21,6 +21,7 @@
   - [[#vterm-configuration][VTerm Configuration]]
   - [[#github-copilot-configuration][GitHub Copilot Configuration]]
   - [[#emmet-configuration][Emmet Configuration]]
+  - [[#writeroom-mode-configuration][Writeroom Mode Configuration]]
   - [[#avy-jump-configuration][Avy Jump Configuration]]
   - [[#customel][custom.el]]
 - [[#packageel][package.el]]
@@ -339,6 +340,19 @@ This section contains every custom Emacs configuration for the editor or plugins
 (add-hook 'css-mode-hook 'emmet-mode) ;; enable Emmet's css abbreviation.
 (add-hook 'php-mode-hook 'emmet-mode)
 #+end_src
+** Writeroom Mode Configuration
+
+#+begin_src emacs-lisp :tangle config.el
+;; Already set to "SPC t z" (Zen Mode)
+;; (map! :leader
+;;       (:prefix "t"
+;;                :desc "Writeroom Mode" "W" #'writeroom-mode))
+
+(with-eval-after-load 'writeroom-mode
+  (define-key writeroom-mode-map (kbd "C-M-<") #'writeroom-decrease-width)
+  (define-key writeroom-mode-map (kbd "C-M->") #'writeroom-increase-width)
+  (define-key writeroom-mode-map (kbd "C-M-=") #'writeroom-adjust-width))
+#+end_src
 
 ** Avy Jump Configuration
 
@@ -370,8 +384,10 @@ This section contains every custom Emacs configuration for the editor or plugins
 ;; Visual
 (package! solaire-mode)
 (package! beacon)
-(package! focus)
 (package! rainbow-mode)
+(package! focus)
+(package! writeroom-mode) ;; This is Zen mode
+;; (package! darkroom)
 
 ;; Programming
 (package! emmet-mode)
