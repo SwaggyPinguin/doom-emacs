@@ -211,6 +211,9 @@ This section contains every custom Emacs configuration for the editor or plugins
 ;; Unique buffer names
 (setq uniquify-buffer-name-style 'forward
       uniquify-min-dir-content 3)
+
+;; Set buffer file size limit
+(setq default-buffer-file-size-limit (* 1024 1024)) ; Set to 1 MB
 #+end_src
 
 ** Garbage Collection
