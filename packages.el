@@ -12,8 +12,10 @@
 ;; Visual
 (package! solaire-mode)
 (package! beacon)
-(package! focus)
 (package! rainbow-mode)
+(package! focus)
+(package! writeroom-mode) ;; This is Zen mode
+;; (package! darkroom)
 
 ;; Programming
 (package! emmet-mode)
