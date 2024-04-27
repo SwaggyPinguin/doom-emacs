@@ -296,8 +296,32 @@ This section contains every custom Emacs configuration for the editor or plugins
 
 ** Debug Configuration
 
-#+begin_src emacs-lisp :tangle config.el
+*** Dap Mode Configuration
 
+#+begin_src emacs-lisp :tangle config.el
+(use-package dap-mode
+  :config
+  (dap-ui-mode 1)
+  (require 'dap-php)
+  (dap-php-setup))
+#+end_src
+
+*** Debug Templates
+
+#+begin_src emacs-lisp :tangle config.el
+;; (dap-register-debug-template
+;;  "PHP Listen for Xdebug"
+;;  (list :type "php"
+;;        :request "launch"
+;;        :name "Listen for Xdebug"
+;;        :port 9003
+;;        :stopOnEntry t
+;;        :sourceMaps t
+;;        ;; :pathMappings (ht ("/var/www/bmc" "${workspaceFolder}"))
+;;        ;; :pathMappings (list
+;;        ;;                "/var/www/wifimedia4u" "${workspaceFolder}"
+;;        ;;                "/var/www/bmc" "${workspaceFolder}")
+;;        :log (concat doom-cache-dir "xdebug.log")))
 #+end_src
 
 ** VTerm Configuration

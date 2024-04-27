@@ -54,7 +54,7 @@
 
 (after! org (org-eldoc-load))
 
-;; (with-eval-after-load 'org (global-org-modern-mode))
+(with-eval-after-load 'org (global-org-modern-mode))
 
 (setq
   ;; Edit settings
@@ -140,6 +140,9 @@
 (setq uniquify-buffer-name-style 'forward
       uniquify-min-dir-content 3)
 
+;; Set buffer file size limit
+(setq default-buffer-file-size-limit (* 1024 1024)) ; Set to 1 MB
+
 ;; Garbage collection to speed things up
 ;; (add-hook 'after-init-hook
 ;;           #'(lambda ()
@@ -176,16 +179,13 @@
 ;; (add-to-list 'focus-mode-to-thing '(php-mode . paragraph))
 ;; (add-to-list 'focus-mode-to-thing '(lisp-mode . paragraph))
 
-(use-package lsp-mode
-  :ensure t)
+(use-package lsp-mode)
 
 (use-package nix-mode
-  :hook (nix-mode . lsp-deferred)
-  :ensure t)
+  :hook (nix-mode . lsp-deferred))
 
 (use-package php-mode
-  :hook (php-mode . lsp-deferred)
-  :ensure t)
+  :hook (php-mode . lsp-deferred))
 
 (setq +format-on-save-enabled-modes '(not emacs-lisp-mode sql-mode nix-mode php-mode))
 
@@ -197,7 +197,25 @@
   :config
   (setq php-cs-fixer-config-option (concat (getenv "HOME") "/.config/doom/tools/.php-cs.php")))
 
+(use-package dap-mode
+  :config
+  (dap-ui-mode 1)
+  (require 'dap-php)
+  (dap-php-setup))
 
+;; (dap-register-debug-template
+;;  "PHP Listen for Xdebug"
+;;  (list :type "php"
+;;        :request "launch"
+;;        :name "Listen for Xdebug"
+;;        :port 9003
+;;        :stopOnEntry t
+;;        :sourceMaps t
+;;        ;; :pathMappings (ht ("/var/www/bmc" "${workspaceFolder}"))
+;;        ;; :pathMappings (list
+;;        ;;                "/var/www/wifimedia4u" "${workspaceFolder}"
+;;        ;;                "/var/www/bmc" "${workspaceFolder}")
+;;        :log (concat doom-cache-dir "xdebug.log")))
 
 (use-package vterm
   :commands vterm
@@ -227,6 +245,16 @@
 (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
 (add-hook 'css-mode-hook 'emmet-mode) ;; enable Emmet's css abbreviation.
 (add-hook 'php-mode-hook 'emmet-mode)
+
+;; Already set to "SPC t z" (Zen Mode)
+;; (map! :leader
+;;       (:prefix "t"
+;;                :desc "Writeroom Mode" "W" #'writeroom-mode))
+
+(with-eval-after-load 'writeroom-mode
+  (define-key writeroom-mode-map (kbd "C-M-<") #'writeroom-decrease-width)
+  (define-key writeroom-mode-map (kbd "C-M->") #'writeroom-increase-width)
+  (define-key writeroom-mode-map (kbd "C-M-=") #'writeroom-adjust-width))
 
 (global-set-key (kbd "C-'") 'avy-goto-char-2)
 
