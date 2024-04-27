@@ -267,16 +267,13 @@ This section contains every custom Emacs configuration for the editor or plugins
 ** LSP Configuration
 
 #+begin_src emacs-lisp :tangle config.el
-(use-package lsp-mode
-  :ensure t)
+(use-package lsp-mode)
 
 (use-package nix-mode
-  :hook (nix-mode . lsp-deferred)
-  :ensure t)
+  :hook (nix-mode . lsp-deferred))
 
 (use-package php-mode
-  :hook (php-mode . lsp-deferred)
-  :ensure t)
+  :hook (php-mode . lsp-deferred))
 
 (setq +format-on-save-enabled-modes '(not emacs-lisp-mode sql-mode nix-mode php-mode))
 #+end_src
