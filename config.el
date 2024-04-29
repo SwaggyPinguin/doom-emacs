@@ -133,8 +133,8 @@
 (bind-key* (kbd "M-<return>") #'+vterm/here)
 (bind-key* (kbd "M-E") #'+eshell/here)
 
-(bind-key* "<mouse-4>" #'next-buffer)
-(bind-key* "<mouse-5>" #'previous-buffer)
+(bind-key* "<mouse-9>" #'next-buffer)
+(bind-key* "<mouse-8>" #'previous-buffer)
 
 ;; Unique buffer names
 (setq uniquify-buffer-name-style 'forward
@@ -225,6 +225,11 @@
 ;; accept completion from copilot and fallback to company
 (use-package! copilot
   :hook (prog-mode . copilot-mode)
+  ;; disable copilot warning
+  (copilot-mode . (lambda ()
+                    (setq-local copilot--indent-warning-printed-p t)))
+  :config
+  (setq copilot-max-char 1000000)
   :bind (:map copilot-completion-map
               ("M-j" . 'copilot-accept-completion)
               ("M-j" . 'copilot-accept-completion)
@@ -234,13 +239,6 @@
               ;; ("TAB" . 'copilot-accept-completion)
               ;; ("C-TAB" . 'copilot-accept-completion-by-word)
               ;; ("C-<tab>" . 'copilot-accept-completion-by-word)))
-
-;; disable copilot warning
-(use-package copilot
-  :hook
-  (prog-mode . copilot-mode)
-  (copilot-mode . (lambda ()
-                    (setq-local copilot--indent-warning-printed-p t))))
 
 (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
 (add-hook 'css-mode-hook 'emmet-mode) ;; enable Emmet's css abbreviation.
@@ -270,3 +268,6 @@
       :map treemacs-mode-map
       :localleader
       :desc "Treemacs toggle wide with" "w" #'treemacs-extra-wide-toggle)
+
+(after! magit
+  (setq magit-show-long-lines-warning nil))

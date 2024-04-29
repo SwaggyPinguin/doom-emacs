@@ -25,6 +25,7 @@
   - [[#avy-jump-configuration][Avy Jump Configuration]]
   - [[#customel][custom.el]]
   - [[#treemacs-configuration][Treemacs Configuration]]
+  - [[#magit-configuration][Magit Configuration]]
 - [[#packageel][package.el]]
 - [[#initel][init.el]]
 #+END_QUOTE
@@ -206,8 +207,8 @@ This section contains every custom Emacs configuration for the editor or plugins
 ** Buffer Management
 
 #+begin_src emacs-lisp :tangle config.el
-(bind-key* "<mouse-4>" #'next-buffer)
-(bind-key* "<mouse-5>" #'previous-buffer)
+(bind-key* "<mouse-9>" #'next-buffer)
+(bind-key* "<mouse-8>" #'previous-buffer)
 
 ;; Unique buffer names
 (setq uniquify-buffer-name-style 'forward
@@ -340,6 +341,11 @@ This section contains every custom Emacs configuration for the editor or plugins
 ;; accept completion from copilot and fallback to company
 (use-package! copilot
   :hook (prog-mode . copilot-mode)
+  ;; disable copilot warning
+  (copilot-mode . (lambda ()
+                    (setq-local copilot--indent-warning-printed-p t)))
+  :config
+  (setq copilot-max-char 1000000)
   :bind (:map copilot-completion-map
               ("M-j" . 'copilot-accept-completion)
               ("M-j" . 'copilot-accept-completion)
@@ -349,13 +355,6 @@ This section contains every custom Emacs configuration for the editor or plugins
               ;; ("TAB" . 'copilot-accept-completion)
               ;; ("C-TAB" . 'copilot-accept-completion-by-word)
               ;; ("C-<tab>" . 'copilot-accept-completion-by-word)))
-
-;; disable copilot warning
-(use-package copilot
-  :hook
-  (prog-mode . copilot-mode)
-  (copilot-mode . (lambda ()
-                    (setq-local copilot--indent-warning-printed-p t))))
 #+end_src
 
 ** Emmet Configuration
@@ -403,6 +402,12 @@ This section contains every custom Emacs configuration for the editor or plugins
       :map treemacs-mode-map
       :localleader
       :desc "Treemacs toggle wide with" "w" #'treemacs-extra-wide-toggle)
+#+end_src
+** Magit Configuration
+
+#+begin_src emacs-lisp :tangle config.el
+(after! magit
+  (setq magit-show-long-lines-warning nil))
 #+end_src
 
 * package.el
