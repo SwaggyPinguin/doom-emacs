@@ -260,3 +260,13 @@
 
 ;; Disables custom.el
 (setq custom-file null-device)
+
+(use-package treemacs
+  :defer t
+  :config
+  (setq treemacs-width 40))
+
+(map! :after treemacs
+      :map treemacs-mode-map
+      :localleader
+      :desc "Treemacs toggle wide with" "w" #'treemacs-extra-wide-toggle)
