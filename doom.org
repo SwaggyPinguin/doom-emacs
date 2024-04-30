@@ -178,7 +178,7 @@ This section contains every custom Emacs configuration for the editor or plugins
 
 =org-auto-tangle= allows you to add the option =#+auto_tangle: t= in your Org file so that it automatically tangles when you save the document. I have made adding this to your file even easier by creating a function ‘nd/insert-auto-tangle-tag’ and setting it to a keybinding ‘SPC i a’.
 
-#+begin_src emacs-lisp :tangle config.el
+#+begin_src emacs-lisp :tangle no
 ;; (use-package! org-auto-tangle
 ;;   :defer t
 ;;   :hook (org-mode . org-auto-tangle-mode)
@@ -245,7 +245,7 @@ This section contains every custom Emacs configuration for the editor or plugins
 
 ** Garbage Collection
 
-#+begin_src emacs-lisp :tangle config.el
+#+begin_src emacs-lisp :tangle no
 ;; Garbage collection to speed things up
 ;; (add-hook 'after-init-hook
 ;;           #'(lambda ()
@@ -256,7 +256,7 @@ This section contains every custom Emacs configuration for the editor or plugins
 
 ** Dired Configuration
 
-#+begin_src emacs-lisp :tangle config.el
+#+begin_src emacs-lisp :tangle no
 ;; (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
 
 ;; (map! :desc "Increase font size"
@@ -338,7 +338,7 @@ This section contains every custom Emacs configuration for the editor or plugins
 
 *** Debug Templates
 
-#+begin_src emacs-lisp :tangle config.el
+#+begin_src emacs-lisp :tangle no
 ;; (dap-register-debug-template
 ;;  "PHP Listen for Xdebug"
 ;;  (list :type "php"

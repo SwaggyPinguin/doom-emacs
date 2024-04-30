@@ -38,6 +38,18 @@
 ;; Don't create backup files
 (setq make-backup-files nil)
 
+;; `gruvbox-material' contrast and palette options
+(setq doom-gruvbox-material-background  "medium"  ; or hard (defaults to soft)
+     doom-gruvbox-material-palette     "mix") ;mix or original (defaults to material)
+
+;; `gruvbox-material-light' contrast and palette options
+(setq doom-gruvbox-material-light-background  "medium" ; or hard (defaults to soft)
+      doom-gruvbox-material-light-palette     "mix") ; or original (defaults to material)
+
+;; set `doom-theme'
+;; (setq doom-theme 'doom-gruvbox-material) ; dark variant
+;; (setq doom-theme 'doom-gruvbox-material-light) ; light variant
+
 ;; Set default org directory
 (setq org-directory "~/org/")
 
@@ -92,22 +104,6 @@
 ;;   :side 'top'
 ;;   :size 0.9)
 
-;; (use-package! org-auto-tangle
-;;   :defer t
-;;   :hook (org-mode . org-auto-tangle-mode)
-;;   :config
-;;   (setq org-auto-tangle-default t))
-
-;; (defun nd/insert-auto-tangle-tag ()
-;;   "Insert auto-tangle tag in a literate config."
-;;   (interactive)
-;;   (evil-org-open-below 1)
-;;   (insert "#+auto_tangle: t ")
-;;   (evil-force-normal-state))
-
-;; (map! :leader
-;;       :desc "Insert auto_tangle tag" "i a" #'nd/insert-auto-tangle-tag)
-
 ;; Set Path to search for Projects
 (setq projectile-project-search-path '("~/Documents/Projects/bmc/bmc-staging" "~/Documents/Projects/wifimedia4u"))
 
@@ -143,25 +139,6 @@
 ;; Set buffer file size limit
 (setq default-buffer-file-size-limit (* 1024 1024)) ; Set to 1 MB
 
-;; Garbage collection to speed things up
-;; (add-hook 'after-init-hook
-;;           #'(lambda ()
-;;               (setq gc-cons-threshold (* 100 1024 1024))))
-;; (add-hook 'after-focus-change-function 'garbage-collect)
-;; (run-with-idle-timer 5 t 'garbage-collect)
-
-;; (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
-
-;; (map! :desc "Increase font size"
-;;       "C-=" 'text-scale-increase
-
-;;       :desc "Decrease font size"
-;;       "C--" 'text-scale-decrease
-
-;;       :desc "Jump to dired"
-;;       "M-f" 'dired-jump
-;; )
-
 ;; (require 'focus)
 
 ;; (map! :leader
@@ -188,9 +165,12 @@
   :hook (php-mode . lsp-deferred))
 
 (setq +format-on-save-enabled-modes '(not emacs-lisp-mode sql-mode nix-mode php-mode))
+(setq lsp-enable-file-watchers nil)
 
 ;; File Modes
-(add-to-list 'auto-mode-alist '("\\.html\\.twig\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html\\.twig\\'" . web-mode)) ##}
+;; (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+;; (add-to-list 'auto-mode-alist '("\\.twig$'" . twig-mode))
 
 (add-hook 'before-save-hook 'php-cs-fixer-before-save)
 (use-package! php-cs-fixer
@@ -203,24 +183,10 @@
   (require 'dap-php)
   (dap-php-setup))
 
-;; (dap-register-debug-template
-;;  "PHP Listen for Xdebug"
-;;  (list :type "php"
-;;        :request "launch"
-;;        :name "Listen for Xdebug"
-;;        :port 9003
-;;        :stopOnEntry t
-;;        :sourceMaps t
-;;        ;; :pathMappings (ht ("/var/www/bmc" "${workspaceFolder}"))
-;;        ;; :pathMappings (list
-;;        ;;                "/var/www/wifimedia4u" "${workspaceFolder}"
-;;        ;;                "/var/www/bmc" "${workspaceFolder}")
-;;        :log (concat doom-cache-dir "xdebug.log")))
-
 (use-package vterm
   :commands vterm
   :config
-  (setq vterm-shell "bash"))
+  (setq vterm-shell "zsh"))
 
 ;; accept completion from copilot and fallback to company
 (use-package! copilot
@@ -243,6 +209,7 @@
 (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
 (add-hook 'css-mode-hook 'emmet-mode) ;; enable Emmet's css abbreviation.
 (add-hook 'php-mode-hook 'emmet-mode)
+;; (add-hook 'twig-mode-hook 'emmet-mode)
 
 ;; Already set to "SPC t z" (Zen Mode)
 ;; (map! :leader

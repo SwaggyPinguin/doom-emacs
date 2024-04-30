@@ -19,6 +19,7 @@
 
 ;; Programming
 (package! emmet-mode)
+(package! twig-mode)
 
 ;; PHP
 (package! php-mode)
@@ -35,3 +36,7 @@
 ;; GitHub Copilot
 (package! copilot
   :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))
+
+;; Other
+;; (package! counsel-etags)
+;; (package! mmm-mode)
