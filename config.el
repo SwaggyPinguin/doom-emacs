@@ -168,7 +168,7 @@
 (setq lsp-enable-file-watchers nil)
 
 ;; File Modes
-(add-to-list 'auto-mode-alist '("\\.html\\.twig\\'" . web-mode)) ##}
+(add-to-list 'auto-mode-alist '("\\.html\\.twig\\'" . web-mode))
 ;; (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 ;; (add-to-list 'auto-mode-alist '("\\.twig$'" . twig-mode))
 

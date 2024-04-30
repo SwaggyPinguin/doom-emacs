@@ -310,7 +310,7 @@ This section contains every custom Emacs configuration for the editor or plugins
 
 #+begin_src emacs-lisp :tangle config.el
 ;; File Modes
-(add-to-list 'auto-mode-alist '("\\.html\\.twig\\'" . web-mode)) ##}
+(add-to-list 'auto-mode-alist '("\\.html\\.twig\\'" . web-mode))
 ;; (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 ;; (add-to-list 'auto-mode-alist '("\\.twig$'" . twig-mode))
 #+end_src
