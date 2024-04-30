@@ -332,7 +332,7 @@ This section contains every custom Emacs configuration for the editor or plugins
 (use-package vterm
   :commands vterm
   :config
-  (setq vterm-shell "bash"))
+  (setq vterm-shell "zsh"))
 #+end_src
 
 ** GitHub Copilot Configuration
