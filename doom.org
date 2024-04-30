@@ -90,6 +90,22 @@ This section contains every custom Emacs configuration for the editor or plugins
 (setq make-backup-files nil)
 #+end_src
 
+*** Custom Themes
+
+#+begin_src emacs-lisp :tangle config.el
+;; `gruvbox-material' contrast and palette options
+(setq doom-gruvbox-material-background  "medium"  ; or hard (defaults to soft)
+     doom-gruvbox-material-palette     "mix") ;mix or original (defaults to material)
+
+;; `gruvbox-material-light' contrast and palette options
+(setq doom-gruvbox-material-light-background  "medium" ; or hard (defaults to soft)
+      doom-gruvbox-material-light-palette     "mix") ; or original (defaults to material)
+
+;; set `doom-theme'
+;; (setq doom-theme 'doom-gruvbox-material) ; dark variant
+;; (setq doom-theme 'doom-gruvbox-material-light) ; light variant
+#+end_src
+
 ** Org Mode Configuration
 *** Standard Org Mode Configuration
 
