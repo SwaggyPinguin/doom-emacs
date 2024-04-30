@@ -48,6 +48,7 @@ You can also load separate files inside of [[file:config_bak.el][config.el]] via
 This section contains every custom Emacs configuration for the editor or plugins made.
 
 ** User Configuration
+
 #+begin_src emacs-lisp :tangle config.el
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
@@ -104,6 +105,14 @@ This section contains every custom Emacs configuration for the editor or plugins
 ;; set `doom-theme'
 ;; (setq doom-theme 'doom-gruvbox-material) ; dark variant
 ;; (setq doom-theme 'doom-gruvbox-material-light) ; light variant
+#+end_src
+
+*** Custom modules/packages
+
+#+begin_src emacs-lisp :tangle no
+;; Load twig.el
+;; (load! "modules/twig.el") ##}
+;; (require 'twig) ##}
 #+end_src
 
 ** Org Mode Configuration
@@ -294,13 +303,16 @@ This section contains every custom Emacs configuration for the editor or plugins
   :hook (php-mode . lsp-deferred))
 
 (setq +format-on-save-enabled-modes '(not emacs-lisp-mode sql-mode nix-mode php-mode))
+(setq lsp-enable-file-watchers nil)
 #+end_src
 
 ** File Configuration
 
 #+begin_src emacs-lisp :tangle config.el
 ;; File Modes
-(add-to-list 'auto-mode-alist '("\\.html\\.twig\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html\\.twig\\'" . web-mode)) ##}
+;; (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+;; (add-to-list 'auto-mode-alist '("\\.twig$'" . twig-mode))
 #+end_src
 
 ** PHP-CS-Fixer Configuration
@@ -379,7 +391,9 @@ This section contains every custom Emacs configuration for the editor or plugins
 (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
 (add-hook 'css-mode-hook 'emmet-mode) ;; enable Emmet's css abbreviation.
 (add-hook 'php-mode-hook 'emmet-mode)
+;; (add-hook 'twig-mode-hook 'emmet-mode)
 #+end_src
+
 ** Writeroom Mode Configuration
 
 #+begin_src emacs-lisp :tangle config.el
@@ -450,6 +464,7 @@ This section contains every custom Emacs configuration for the editor or plugins
 
 ;; Programming
 (package! emmet-mode)
+(package! twig-mode)
 
 ;; PHP
 (package! php-mode)
@@ -466,6 +481,10 @@ This section contains every custom Emacs configuration for the editor or plugins
 ;; GitHub Copilot
 (package! copilot
   :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))
+
+;; Other
+;; (package! counsel-etags)
+;; (package! mmm-mode)
 #+end_src
 
 * init.el
