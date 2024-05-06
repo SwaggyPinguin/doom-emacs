@@ -20,6 +20,7 @@
 ;; Programming
 (package! emmet-mode)
 (package! twig-mode)
+(package! prettier-js)
 
 ;; PHP
 (package! php-mode)
@@ -37,6 +38,8 @@
 (package! copilot
   :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))
 
+;; Movement
+(package! move-text)
 ;; Other
 ;; (package! counsel-etags)
 ;; (package! mmm-mode)

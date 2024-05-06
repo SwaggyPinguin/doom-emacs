@@ -104,15 +104,17 @@
 ;;   :side 'top'
 ;;   :size 0.9)
 
-;; Set Path to search for Projects
-(setq projectile-project-search-path '("~/Documents/Projects/bmc/bmc-staging" "~/Documents/Projects/wifimedia4u"))
-
-;; I don't know if this is working
-;; Prevent initializing the home directory as a project if it is managed with git
+;; Prevent initializing the home directory as a project
 (after! projectile
   (setq projectile-project-root-files-bottom-up
         (remove ".git"
-          projectile-project-root-files-bottom-up)))
+          projectile-project-root-files-bottom-up))
+  (setq projectile-auto-discover nil)
+  (setq projectile-track-known-projects-automatically nil)
+  (setq projectile-ignored-projects '("~/"))
+  (setq projectile-project-search-path '("~/Documents/Projects/bmc/bmc-staging"
+                                       "~/Documents/Projects/bmc/bmc-old"
+                                       "~/Documents/Projects/wifimedia4u")))
 
 ;; Quicker window management keybindings
 (bind-key* "C-j" #'evil-window-down)
@@ -169,6 +171,7 @@
 
 ;; File Modes
 (add-to-list 'auto-mode-alist '("\\.html\\.twig\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 ;; (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 ;; (add-to-list 'auto-mode-alist '("\\.twig$'" . twig-mode))
 
@@ -176,6 +179,10 @@
 (use-package! php-cs-fixer
   :config
   (setq php-cs-fixer-config-option (concat (getenv "HOME") "/.config/doom/tools/.php-cs.php")))
+
+(require 'prettier-js)
+(add-hook 'js2-mode-hook 'prettier-js-mode)
+;; (add-hook 'web-mode-hook 'prettier-js-mode)
 
 (use-package dap-mode
   :config
@@ -238,3 +245,14 @@
 
 (after! magit
   (setq magit-show-long-lines-warning nil))
+
+;; Reindent line after moving
+(defun indent-region-advice (&rest ignored)
+  (let ((deactivate deactivate-mark))
+    (if (region-active-p)
+        (indent-region (region-beginning) (region-end))
+      (indent-region (line-beginning-position) (line-end-position)))
+    (setq deactivate-mark deactivate)))
+
+(advice-add 'move-text-up :after 'indent-region-advice)
+(advice-add 'move-text-down :after 'indent-region-advice)

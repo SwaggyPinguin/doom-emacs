@@ -201,15 +201,17 @@ This section contains every custom Emacs configuration for the editor or plugins
 ** Projectile Configuration
 
 #+begin_src emacs-lisp :tangle config.el
-;; Set Path to search for Projects
-(setq projectile-project-search-path '("~/Documents/Projects/bmc/bmc-staging" "~/Documents/Projects/wifimedia4u"))
-
-;; I don't know if this is working
-;; Prevent initializing the home directory as a project if it is managed with git
+;; Prevent initializing the home directory as a project
 (after! projectile
   (setq projectile-project-root-files-bottom-up
         (remove ".git"
-          projectile-project-root-files-bottom-up)))
+          projectile-project-root-files-bottom-up))
+  (setq projectile-auto-discover nil)
+  (setq projectile-track-known-projects-automatically nil)
+  (setq projectile-ignored-projects '("~/"))
+  (setq projectile-project-search-path '("~/Documents/Projects/bmc/bmc-staging"
+                                       "~/Documents/Projects/bmc/bmc-old"
+                                       "~/Documents/Projects/wifimedia4u")))
 #+end_src
 
 ** Window Management
@@ -444,6 +446,7 @@ This section contains every custom Emacs configuration for the editor or plugins
       :localleader
       :desc "Treemacs toggle wide with" "w" #'treemacs-extra-wide-toggle)
 #+end_src
+
 ** Magit Configuration
 
 #+begin_src emacs-lisp :tangle config.el
