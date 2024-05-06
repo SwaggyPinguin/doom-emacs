@@ -17,6 +17,7 @@
   - [[#lsp-configuration][LSP Configuration]]
   - [[#file-configuration][File Configuration]]
   - [[#php-cs-fixer-configuration][PHP-CS-Fixer Configuration]]
+  - [[#prettier-js-configuration][Prettier-js Configuration]]
   - [[#debug-configuration][Debug Configuration]]
   - [[#vterm-configuration][VTerm Configuration]]
   - [[#github-copilot-configuration][GitHub Copilot Configuration]]
@@ -311,6 +312,7 @@ This section contains every custom Emacs configuration for the editor or plugins
 #+begin_src emacs-lisp :tangle config.el
 ;; File Modes
 (add-to-list 'auto-mode-alist '("\\.html\\.twig\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 ;; (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 ;; (add-to-list 'auto-mode-alist '("\\.twig$'" . twig-mode))
 #+end_src
@@ -322,6 +324,14 @@ This section contains every custom Emacs configuration for the editor or plugins
 (use-package! php-cs-fixer
   :config
   (setq php-cs-fixer-config-option (concat (getenv "HOME") "/.config/doom/tools/.php-cs.php")))
+#+end_src
+
+** Prettier-js Configuration
+
+#+begin_src emacs-lisp :tangle config.el
+(require 'prettier-js)
+(add-hook 'js2-mode-hook 'prettier-js-mode)
+;; (add-hook 'web-mode-hook 'prettier-js-mode)
 #+end_src
 
 ** Debug Configuration
@@ -465,6 +475,7 @@ This section contains every custom Emacs configuration for the editor or plugins
 ;; Programming
 (package! emmet-mode)
 (package! twig-mode)
+(package! prettier-js)
 
 ;; PHP
 (package! php-mode)
