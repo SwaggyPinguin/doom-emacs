@@ -175,6 +175,8 @@
 ;; (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 ;; (add-to-list 'auto-mode-alist '("\\.twig$'" . twig-mode))
 
+(add-hook 'web-mode-hook 'rainbow-mode)
+
 (add-hook 'before-save-hook 'php-cs-fixer-before-save)
 (use-package! php-cs-fixer
   :config
@@ -256,3 +258,15 @@
 
 (advice-add 'move-text-up :after 'indent-region-advice)
 (advice-add 'move-text-down :after 'indent-region-advice)
+
+(use-package scss-mode
+  :config
+  (setq scss-compile-at-save nil))
+
+(defun format-scss-buffer ()
+  "Format the current buffer using prettier-prettify."
+  (when (eq major-mode 'scss-mode)
+    (when (require 'prettier nil t)
+      (prettier-prettify))))
+
+(add-hook 'before-save-hook #'format-scss-buffer)

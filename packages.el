@@ -21,6 +21,11 @@
 (package! emmet-mode)
 (package! twig-mode)
 (package! prettier-js)
+(package! prettier)
+
+;; Scss
+;; (package! helm-css-scss)
+(package! scss-mode)
 
 ;; PHP
 (package! php-mode)
