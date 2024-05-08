@@ -17,6 +17,9 @@
 (package! writeroom-mode) ;; This is Zen mode
 ;; (package! darkroom)
 
+;; Themes
+(package! spacemacs-theme)
+
 ;; Programming
 (package! emmet-mode)
 (package! twig-mode)
