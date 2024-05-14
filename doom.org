@@ -242,8 +242,26 @@ This section contains every custom Emacs configuration for the editor or plugins
 (bind-key* "<mouse-8>" #'previous-buffer)
 
 ;; Unique buffer names
-(setq uniquify-buffer-name-style 'forward
-      uniquify-min-dir-content 3)
+;; WORKS BUT WILL BE TRIGGERED EVERYTIME A BUFFER IS LOADED
+(add-hook 'buffer-list-update-hook
+        (lambda ()
+          ;; (message "Setting uniquify-buffer-name-style...")
+          (setq uniquify-buffer-name-style 'post-forward
+                uniquify-min-dir-content 3)))
+          ;; (message "uniquify-buffer-name-style set to: %s" uniquify-buffer-name-style)))
+
+;; NOT WORKING CORRECTLY
+;; (defun nd/set-uniquify-buffer-name-style ()
+;;           (message "Setting uniquify-buffer-name-style...")
+;;           (setq uniquify-buffer-name-style 'post-forward
+;;                 uniquify-min-dir-content 3)
+;;           (message "uniquify-buffer-name-style set to: %s" uniquify-buffer-name-style))
+
+;; (add-hook 'emacs-startup-hook 'nd/set-uniquify-buffer-name-style)
+;; (add-hook 'buffer-list-update-hook
+;;           (lambda ()
+;;             'nd/set-uniquify-buffer-name-style
+;;             (remove-hook 'buffer-list-update-hook 'nd/set-uniquify-buffer-name-style)))
 
 ;; Set buffer file size limit
 (setq default-buffer-file-size-limit (* 1024 1024)) ; Set to 1 MB
