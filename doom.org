@@ -361,6 +361,28 @@ This section contains every custom Emacs configuration for the editor or plugins
 
 ** Debug Configuration
 
+*** Keybindings
+
+#+begin_src emacs-lisp :tangle config.el
+(map! :leader
+      :prefix ("d" . "debug")
+
+      :desc "Start Debug"
+      "d" 'dap-debug
+
+      :desc "Toggle Breakpoint"
+      "b" 'dap-breakpoint-toggle
+
+      :desc "Disconnect"
+      "x" 'dap-disconnect
+
+      :desc "Continue"
+      "c" 'dap-continue
+
+      :desc "Restart"
+      "r" 'dap-restart-frame)
+#+end_src
+
 *** Dap Mode Configuration
 
 #+begin_src emacs-lisp :tangle config.el

@@ -204,6 +204,24 @@
 (add-hook 'js2-mode-hook 'prettier-js-mode)
 ;; (add-hook 'web-mode-hook 'prettier-js-mode)
 
+(map! :leader
+      :prefix ("d" . "debug")
+
+      :desc "Start Debug"
+      "d" 'dap-debug
+
+      :desc "Toggle Breakpoint"
+      "b" 'dap-breakpoint-toggle
+
+      :desc "Disconnect"
+      "x" 'dap-disconnect
+
+      :desc "Continue"
+      "c" 'dap-continue
+
+      :desc "Restart"
+      "r" 'dap-restart-frame)
+
 (use-package dap-mode
   :config
   (dap-ui-mode 1)
