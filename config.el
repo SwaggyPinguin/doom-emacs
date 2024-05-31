@@ -104,6 +104,9 @@
 ;;   :side 'top'
 ;;   :size 0.9)
 
+(setq deft-extensions '("txt" "tex" "org"))
+(setq deft-directory "~/org")
+
 ;; Prevent initializing the home directory as a project
 (after! projectile
   (setq projectile-project-root-files-bottom-up
