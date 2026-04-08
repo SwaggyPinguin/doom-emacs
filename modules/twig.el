@@ -91,7 +91,7 @@
 	(newline)
      )
     )
-  (insert (concat "{% endfif %}"))
+  (insert (concat "{% endif %}"))
   (goto-char point-to-insert)
   (indent-according-to-mode)
 )

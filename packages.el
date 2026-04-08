@@ -10,22 +10,22 @@
 ;; (package! all-the-icons-nerd-fonts)
 
 ;; Visual
-(package! solaire-mode)
+;; (package! solaire-mode) ; built into Doom
 (package! beacon)
 (package! rainbow-mode)
 (package! focus)
-(package! writeroom-mode) ;; This is Zen mode
+;; (package! writeroom-mode) ; provided by Doom's zen module
 ;; (package! darkroom)
 
 ;; Programming
 (package! emmet-mode)
 (package! twig-mode)
-(package! prettier-js)
+;; (package! prettier-js) ; replaced by prettier
 (package! prettier)
 
 ;; Scss
 ;; (package! helm-css-scss)
-(package! scss-mode)
+;; (package! scss-mode)
 
 ;; PHP
 (package! php-mode)
@@ -40,8 +40,12 @@
 (package! dap-mode)
 
 ;; GitHub Copilot
-(package! copilot
-  :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))
+;; (package! copilot
+;;   :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))
+
+;; Git
+(package! magit-delta)
+(package! diffview)
 
 ;; Movement
 (package! move-text)

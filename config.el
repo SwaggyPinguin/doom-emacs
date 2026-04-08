@@ -28,11 +28,7 @@
 ;; (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup)
 ;; (all-the-icons-completion-mode)
 
-;; This makes non-main buffers dimmer, so you can focus on main buffers
-(solaire-global-mode +1)
-
 ;; Beacon shows where the cursor is, even when fast scrolling
-;; (setq beacon-mode t)
 (beacon-mode 1)
 
 ;; Don't create backup files
@@ -64,9 +60,7 @@
   '(org-level-7 :inherit outline-7 :height 1.05)
   )
 
-(after! org (org-eldoc-load))
-
-(with-eval-after-load 'org (global-org-modern-mode))
+(after! org (global-org-modern-mode))
 
 (setq
   ;; Edit settings
@@ -83,16 +77,14 @@
 
 (setq-default line-spacing 0)
 
-;; Automatic table of contents is nice
-(if (require 'toc-org nil t)
-    (progn
-      (add-hook 'org-mode-hook 'toc-org-mode)
-      (add-hook 'markdown-mode-hook 'toc-org-mode))
-  (warn "toc-org not found"))
+;; Automatic table of contents
+(use-package! toc-org
+  :hook (org-mode . toc-org-mode)
+  :hook (markdown-mode . toc-org-mode))
 
 ;; Tangle Org files when we save them
 (defun tangle-on-save-org-mode-file()
-  (when (string= (message "%s" major-mode) "org-mode")
+  (when (derived-mode-p 'org-mode)
     (org-babel-tangle)))
 
 (add-hook 'after-save-hook 'tangle-on-save-org-mode-file)
@@ -120,44 +112,25 @@
                                        "~/Documents/Projects/wifimedia4u")))
 
 ;; Quicker window management keybindings
-(bind-key* "C-j" #'evil-window-down)
-(bind-key* "C-k" #'evil-window-up)
-(bind-key* "C-h" #'evil-window-left)
-(bind-key* "C-l" #'evil-window-right)
-(bind-key* "C-q" #'evil-window-delete)
-(bind-key* "M-q" #'kill-current-buffer)
-(bind-key* "M-w" #'+workspace/close-window-or-workspace)
-(bind-key* "M-n" #'next-buffer)
-(bind-key* "M-p" #'previous-buffer)
-(bind-key* "M-z" #'+vterm/toggle)
-(bind-key* "M-e" #'+eshell/toggle)
-(bind-key* (kbd "M-<return>") #'+vterm/here)
-(bind-key* (kbd "M-E") #'+eshell/here)
-
-(bind-key* "<mouse-9>" #'next-buffer)
-(bind-key* "<mouse-8>" #'previous-buffer)
+(map! "C-j" #'evil-window-down
+      "C-k" #'evil-window-up
+      "C-h" #'evil-window-left
+      "C-l" #'evil-window-right
+      "C-q" #'evil-window-delete
+      "M-q" #'kill-current-buffer
+      "M-w" #'+workspace/close-window-or-workspace
+      "M-n" #'next-buffer
+      "M-p" #'previous-buffer
+      "M-z" #'+vterm/toggle
+      "M-e" #'+eshell/toggle
+      "M-<return>" #'+vterm/here
+      "M-E" #'+eshell/here
+      "<mouse-9>" #'next-buffer
+      "<mouse-8>" #'previous-buffer)
 
 ;; Unique buffer names
-;; WORKS BUT WILL BE TRIGGERED EVERYTIME A BUFFER IS LOADED
-(add-hook 'buffer-list-update-hook
-        (lambda ()
-          ;; (message "Setting uniquify-buffer-name-style...")
-          (setq uniquify-buffer-name-style 'post-forward
-                uniquify-min-dir-content 3)))
-          ;; (message "uniquify-buffer-name-style set to: %s" uniquify-buffer-name-style)))
-
-;; NOT WORKING CORRECTLY
-;; (defun nd/set-uniquify-buffer-name-style ()
-;;           (message "Setting uniquify-buffer-name-style...")
-;;           (setq uniquify-buffer-name-style 'post-forward
-;;                 uniquify-min-dir-content 3)
-;;           (message "uniquify-buffer-name-style set to: %s" uniquify-buffer-name-style))
-
-;; (add-hook 'emacs-startup-hook 'nd/set-uniquify-buffer-name-style)
-;; (add-hook 'buffer-list-update-hook
-;;           (lambda ()
-;;             'nd/set-uniquify-buffer-name-style
-;;             (remove-hook 'buffer-list-update-hook 'nd/set-uniquify-buffer-name-style)))
+(setq uniquify-buffer-name-style 'post-forward
+      uniquify-min-dir-content 3)
 
 ;; Set buffer file size limit
 (setq default-buffer-file-size-limit (* 1024 1024)) ; Set to 1 MB
@@ -179,12 +152,12 @@
 ;; (add-to-list 'focus-mode-to-thing '(php-mode . paragraph))
 ;; (add-to-list 'focus-mode-to-thing '(lisp-mode . paragraph))
 
-(use-package lsp-mode)
+(use-package! lsp-mode)
 
-(use-package nix-mode
+(use-package! nix-mode
   :hook (nix-mode . lsp-deferred))
 
-(use-package php-mode
+(use-package! php-mode
   :hook (php-mode . lsp-deferred))
 
 (setq +format-on-save-enabled-modes '(not emacs-lisp-mode sql-mode nix-mode php-mode))
@@ -198,14 +171,14 @@
 
 (add-hook 'web-mode-hook 'rainbow-mode)
 
-(add-hook 'before-save-hook 'php-cs-fixer-before-save)
 (use-package! php-cs-fixer
   :config
-  (setq php-cs-fixer-config-option (concat (getenv "HOME") "/.config/doom/tools/.php-cs.php")))
+  (setq php-cs-fixer-config-option (expand-file-name "~/.config/doom/tools/.php-cs.php"))
+  (add-hook 'php-mode-hook
+            (lambda () (add-hook 'before-save-hook #'php-cs-fixer-before-save nil t))))
 
-(require 'prettier-js)
-(add-hook 'js2-mode-hook 'prettier-js-mode)
-;; (add-hook 'web-mode-hook 'prettier-js-mode)
+(use-package! prettier
+  :hook (js2-mode . prettier-mode))
 
 (map! :leader
       :prefix ("d" . "debug")
@@ -225,34 +198,16 @@
       :desc "Restart"
       "r" 'dap-restart-frame)
 
-(use-package dap-mode
+(use-package! dap-mode
   :config
   (dap-ui-mode 1)
   (require 'dap-php)
   (dap-php-setup))
 
-(use-package vterm
+(use-package! vterm
   :commands vterm
   :config
   (setq vterm-shell "zsh"))
-
-;; accept completion from copilot and fallback to company
-(use-package! copilot
-  :hook (prog-mode . copilot-mode)
-  ;; disable copilot warning
-  (copilot-mode . (lambda ()
-                    (setq-local copilot--indent-warning-printed-p t)))
-  :config
-  (setq copilot-max-char 1000000)
-  :bind (:map copilot-completion-map
-              ("M-j" . 'copilot-accept-completion)
-              ("M-j" . 'copilot-accept-completion)
-              ("C-TAB" . 'copilot-accept-completion-by-word)
-              ("C-<tab>" . 'copilot-accept-completion-by-word)))
-              ;; ("<tab>" . 'copilot-accept-completion)
-              ;; ("TAB" . 'copilot-accept-completion)
-              ;; ("C-TAB" . 'copilot-accept-completion-by-word)
-              ;; ("C-<tab>" . 'copilot-accept-completion-by-word)))
 
 (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
 (add-hook 'css-mode-hook 'emmet-mode) ;; enable Emmet's css abbreviation.
@@ -264,17 +219,17 @@
 ;;       (:prefix "t"
 ;;                :desc "Writeroom Mode" "W" #'writeroom-mode))
 
-(with-eval-after-load 'writeroom-mode
+(after! writeroom-mode
   (define-key writeroom-mode-map (kbd "C-M-<") #'writeroom-decrease-width)
   (define-key writeroom-mode-map (kbd "C-M->") #'writeroom-increase-width)
   (define-key writeroom-mode-map (kbd "C-M-=") #'writeroom-adjust-width))
 
-(global-set-key (kbd "C-'") 'avy-goto-char-2)
+(map! "C-'" #'avy-goto-char-2)
 
 ;; Disables custom.el
 (setq custom-file null-device)
 
-(use-package treemacs
+(use-package! treemacs
   :defer t
   :config
   (setq treemacs-width 40))
@@ -287,6 +242,19 @@
 (after! magit
   (setq magit-show-long-lines-warning nil))
 
+(use-package! magit-delta
+  :hook (magit-mode . magit-delta-mode))
+
+(use-package! diffview
+  :commands (diffview-current diffview-region diffview-message)
+  :init
+  (map! :leader
+        :prefix "g"
+        :desc "Diffview side-by-side" "d" #'diffview-current)
+  (map! :after magit
+        :map magit-mode-map
+        :n "D" #'diffview-current))
+
 ;; Reindent line after moving
 (defun indent-region-advice (&rest ignored)
   (let ((deactivate deactivate-mark))
@@ -298,14 +266,10 @@
 (advice-add 'move-text-up :after 'indent-region-advice)
 (advice-add 'move-text-down :after 'indent-region-advice)
 
-(use-package scss-mode
-  :config
-  (setq scss-compile-at-save nil))
-
 (defun format-scss-buffer ()
   "Format the current buffer using prettier-prettify."
-  (when (eq major-mode 'scss-mode)
-    (when (require 'prettier nil t)
-      (prettier-prettify))))
+  (when (require 'prettier nil t)
+    (prettier-prettify)))
 
-(add-hook 'before-save-hook #'format-scss-buffer)
+(add-hook 'scss-mode-hook
+          (lambda () (add-hook 'before-save-hook #'format-scss-buffer nil t)))

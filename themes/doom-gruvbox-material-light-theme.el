@@ -353,7 +353,7 @@ Defaults to \"material\""
    (rainbow-delimiters-depth-2-face :foreground violet)
    (rainbow-delimiters-depth-3-face :foreground dark-cyan)
    (rainbow-delimiters-depth-4-face :foreground dark-yellow)
-   (rainbow-delimiters-unmatched-face: :foreground fg :background 'nil)
+   (rainbow-delimiters-unmatched-face :foreground fg :background nil)
    (show-paren-match :foreground bg :background dark-red)
 
    ;; tree sitter
